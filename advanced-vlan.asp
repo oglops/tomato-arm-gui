@@ -17,7 +17,7 @@
 	https://github.com/slash31/TomatoE
 
 	VLAN Port Order by 't_model_name'
-	June 2014 Tvlz
+	March 2015 Tvlz
 	https://bitbucket.org/tvlz/tvlz-advanced-vlan/
 
 	** Last Updated - Aug 10 2016 - Tvlz **
@@ -81,27 +81,12 @@ if(nvram['boardflags'] & 0x0100) { // BFL_ENETVLAN = this board has vlan capabil
 // http://wiki.openwrt.org/toh/asus/start
 // http://wiki.openwrt.org/toh/linksys/start
 // http://wiki.openwrt.org/toh/start
-switch(nvram['t_model_name']) { //Added by Tvlz, June 2014
+switch(nvram['t_model_name']) {
 	case 'vlan-testid0':
-	case 'Belkin Share N300 (F7D3302/F7D7302) v1':
-	case 'Belkin Play N600 (F7D4302/F7D8302) v1':
-	case 'D-Link Dir-620 C1':
-//	case 'FiberHome HG320':
-	case 'Linksys E800 v1.0':
-	case 'Linksys E900 v1.0':
-	case 'Linksys E1200 v1.0':
-	case 'Linksys E1200 v2.0':
-	case 'Linksys E1500 v1.0':
-	case 'Linksys E1550 v1.0':
-	case 'Linksys E2500 v1.0':
-	case 'Linksys E2500 v1/v2/v3':
-	case 'Linksys E3200 v1.0':
-	case 'Linksys E4200 v1':
-//	case 'Netgear WNDR3700v3':
-//	case 'Netgear WNDR4000':
-	case 'Netgear WNDR4500 V1':
-//	case 'Netgear WNDR4500 V2':
-//	case 'Netgear R6300 V1':
+	case 'Asus RT-AC56U':
+	case 'D-Link DIR868L':
+	case 'Cisco Linksys EA6500v2':
+	case 'Cisco Linksys EA6700':
 		COL_P0N = '0';
 		COL_P1N = '1';
 		COL_P2N = '2';
@@ -109,26 +94,14 @@ switch(nvram['t_model_name']) { //Added by Tvlz, June 2014
 		COL_P4N = '4';
 	break;
 	case 'vlan-testid1':
-	case 'Asus RT-N10U':
-	case 'Asus RT-N66U':
-	case 'Belkin N F5D8235-4 v3':
-//	case 'Buffalo WZR-D1100H':
-//	case 'Buffalo WZR-D1800H':
-	case 'Cisco M10 v1.0':
-	case 'Cisco M10 v2.0':
-	case 'D-Link DIR-865L':
-	case 'Linksys M20':
-	case 'Linksys E1000 v1':
-	case 'Linksys E1000 v2.0':
-	case 'Linksys E1000 v2.1':
-	case 'Linksys E2000':
-	case 'Linksys E3000':
-//	case 'Linksys WRT310N':
-	case 'Linksys WRT320N':
-	case 'Linksys WRT610N v2':
-	case 'Tenda N6':
-//	case 'Tenda N80':
-	case 'Tenda W1800R':
+	case 'Asus RT-N18U':
+	case 'Asus RT-AC68R/U':
+	case 'Asus RT-AC68P':
+	case 'Asus RT-AC68P/U B1':
+	case 'Huawei WS880':
+	case 'Linksys EA6900':
+	case 'Netgear R6400':
+	case 'Netgear R7000':
 		COL_P0N = '1';
 		COL_P1N = '2';
 		COL_P2N = '3';
@@ -136,18 +109,8 @@ switch(nvram['t_model_name']) { //Added by Tvlz, June 2014
 		COL_P4N = '0';
 	break;
 	case 'vlan-testid2':
-	case 'Asus RT-N10P':
-	case 'Asus RT-N12':
-	case 'Asus RT-N12 B1':
-	case 'Asus RT-N15U':
-	case 'Asus RT-N53':
-	case 'Asus RT-N53 A1':
-	case 'Belkin Share Max N300 (F7D3301/F7D7301) v1':
-	case 'Belkin Play Max / N600 HD (F7D4301/F7D8301) v1':
-	case 'Netcore NR235W': //NOT in Shibby Firmware - https://github.com/Jackysi/advancedtomato/pull/142
-//	case 'Netgear WNDR3400':
-//	case 'Netgear WNDR3400v2':
-//	case 'Netgear WNDR3400v3':
+	case 'Netgear R6250':
+	case 'Netgear R6300v2':
 		COL_P0N = '3';
 		COL_P1N = '2';
 		COL_P2N = '1';
@@ -155,19 +118,18 @@ switch(nvram['t_model_name']) { //Added by Tvlz, June 2014
 		COL_P4N = '4';
 	break;
 	case 'vlan-testid3':
-	case 'Asus RT-N16': //invert port order=checked
-	case 'Asus RT-AC66U':
-	case 'Catchtech CW-5358U':
-//	case 'ChinaNet RG200E-CA':
-	case 'Netgear WNR2000 v2':
-	case 'Netgear WNR3500L/U/v2':
-	case 'Netgear WNR3500L v2':
-	case 'Tenda N60':
 		COL_P0N = '4';
 		COL_P1N = '3';
 		COL_P2N = '2';
 		COL_P3N = '1';
 		COL_P4N = '0';
+	break;
+	case 'Xiaomi MiWiFi': //only has 2 Lan Ports
+		COL_P0N = '0';
+		COL_P1N = '2';
+		COL_P2N = '1';
+		COL_P3N = '3';
+		COL_P4N = '4';
 	break;
 	default:
 		COL_P0N = '1';
@@ -177,18 +139,6 @@ switch(nvram['t_model_name']) { //Added by Tvlz, June 2014
 		COL_P4N = '0';
 		unknown_router = '1';
 		break;
-/* K2.6 Routers from Tomatoanon needing port order info from router case
-case 'CW-5356U': // brand ??
-case 'ZTE H218N':
-case 'ZTE ZXV10 H618B':
-case 'Linksys WRT160N':
-case 'Linksys WRT300N v1':
-case 'D-Link DIR-627':
-case 'Netcore NI360/Q3':
-case 'PHICOMM FIR302b':
-case 'Vivick Q-W601':
-case 'Netcore NW715P':
-*/
 }
 
 var COL_VID = 0;
@@ -462,7 +412,7 @@ REMOVE-END */
 /* MULTIWAN-BEGIN */
     bridged[parseInt(nvram['wan3_ifnameX'].replace('vlan',''))] = '8';
     bridged[parseInt(nvram['wan4_ifnameX'].replace('vlan',''))] = '9';
-/* MULTIWAN-END
+/* MULTIWAN-END */
 
 // go thru all possible VLANs
     for (var i = 0 ; i <= MAX_VLAN_ID ; i++) {
@@ -539,7 +489,7 @@ REMOVE-END */
   {
     return this.countElem(COL_BRI,9);
   }
-/* MULTIWAN-END
+/* MULTIWAN-END */
 
   vlg.countLan = function(l)
   {
@@ -686,7 +636,7 @@ REMOVE-END */
     } else {
       ferror.clear(f[COL_BRI]);
     }
-/* MULTIWAN-END
+/* MULTIWAN-END */
 
     for(var i=0; i<4; i++) {
       if ((this.countLan(i) > 0) && (f[COL_BRI].selectedIndex == (i+2))) {
@@ -952,7 +902,7 @@ function earlyInit() {
 /* MULTIWAN-BEGIN */
 <input type='hidden' name='wan3_ifnameX'>
 <input type='hidden' name='wan4_ifnameX'>
-/* MULTIWAN-END
+/* MULTIWAN-END */
 <input type='hidden' name='manual_boot_nv'>
 <input type='hidden' name='lan_ifnames'>
 <input type='hidden' name='lan1_ifnames'>
