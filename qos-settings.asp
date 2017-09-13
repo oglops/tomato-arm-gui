@@ -198,7 +198,7 @@ createFieldTable('', [
 /* REMOVE-BEGIN
 	!!TB - added qos_pfifo
 REMOVE-END */
-	{ title: 'Qdisc 调度器', name: 'qos_pfifo', type: 'select', options: [['0','sfq'],['1','pfifo']], value: nvram.qos_pfifo }
+	{ title: 'Qdisc 调度器', name: 'qos_pfifo', type: 'select', options: [['0','sfq'],['1','pfifo'],['2','codel'],['3','fq_codel']], value: nvram.qos_pfifo }
 ]);
 </script>
 </div>

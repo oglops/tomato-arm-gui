@@ -2143,12 +2143,7 @@ null,
 /* TOR-BEGIN */
 			['TOR 项目',			'tor.asp'],
 /* TOR-END */
-/* MIPSR2-BEGIN */
 			['VLAN 设置',			'vlan.asp'],
-/* MIPSR2-END */
-/* MIPSR1-BEGIN */
-			['VLAN 设置',			'vlan-r1.asp'],
-/* MIPSR1-END */
 			['局域网访问',			'access.asp'],
 			['虚拟无线设置',		'wlanvifs.asp'],
 			['无线设置',			'wireless.asp'] ] ],

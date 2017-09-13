@@ -32,13 +32,29 @@ else if (last_wan_proto != nvram.wan_proto) {
 reloadPage();
 }
 stats.flashsize = sysinfo.flashsize+'MB';
-stats.cpumhz = sysinfo.cpuclk+'MHz';
+	stats.cpumhz = sysinfo.cpuclk+'-core)';
 stats.cputemp = sysinfo.cputemp+'°';
 stats.systemtype = sysinfo.systemtype;
 stats.cpuload = ((sysinfo.loads[0] / 65536.0).toFixed(2) + '<small> / </small> ' +
 (sysinfo.loads[1] / 65536.0).toFixed(2) + '<small> / </small>' +
 (sysinfo.loads[2] / 65536.0).toFixed(2));
+	stats.freqcpu = nvram.clkfreq;
 stats.uptime = sysinfo.uptime_s;
+
+	var total_jiffies = 0;
+	var jiffylist = sysinfo.jiffies.split(' ');
+	for (i=0; i < jiffylist.length; ++i) {
+		total_jiffies += parseInt(jiffylist[i]);
+	}
+	var diff_idle = jiffylist[3] - lastjiffiesidle;
+	var diff_total = total_jiffies - lastjiffiestotal;
+	lastjiffiesusage = (1000*(diff_total-diff_idle)/diff_total)/10;
+
+	lastjiffiestotal = total_jiffies;
+	lastjiffiesidle = jiffylist[3];
+
+	stats.cpupercent = lastjiffiesusage.toFixed(2) + '%';
+	stats.wlsense = sysinfo.wlsense;
 a = sysinfo.totalram;
 b = sysinfo.totalfreeram;
 stats.memory = scaleSize(a) + ' / ' + scaleSize(b) + ' <small>(' + (b / a * 100.0).toFixed(2) + '%)</small>';

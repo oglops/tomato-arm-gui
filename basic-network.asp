@@ -1047,6 +1047,7 @@ vis['_wan'+u+'_l2tp_server_ip'] = 0;
 vis['_wan'+u+'_ppp_service'] = 0;
 vis['_wan'+u+'_gateway'] = (!E('_f_wan'+u+'_pptp_dhcp').checked);
 vis['_wan'+u+'_ipaddr'] = (!E('_f_wan'+u+'_pptp_dhcp').checked);
+            vis['_wan'+u+'_netmask'] = (!E('_f_wan'+u+'_pptp_dhcp').checked);
 vis['_wan'+u+'_modem_ipaddr'] = 0;
 vis['_wan'+u+'_modem_pin'] = 0;
 vis['_wan'+u+'_modem_dev'] = 0;
@@ -1061,7 +1062,6 @@ vis['_wan'+u+'_pptp_server_ip'] = 0;
 vis['_wan'+u+'_ppp_service'] = 0;
 vis['_wan'+u+'_gateway'] = (!E('_f_wan'+u+'_pptp_dhcp').checked);
 vis['_wan'+u+'_ipaddr'] = (!E('_f_wan'+u+'_pptp_dhcp').checked);
-vis['_wan'+u+'_netmask'] = (!E('_f_wan'+u+'_pptp_dhcp').checked);
 vis['_wan'+u+'_netmask'] = (!E('_f_wan'+u+'_pptp_dhcp').checked);
 vis['_wan'+u+'_modem_ipaddr'] = 0;
 vis['_wan'+u+'_modem_pin'] = 0;
@@ -1865,7 +1865,6 @@ value: nvram['wan'+u+'_proto'] },
 		{ title: '用户密码', name: 'wan'+u+'_ppp_passwd', type: 'password', maxlen: 60, size: 64, peekaboo: 1, value: nvram['wan'+u+'_ppp_passwd'] },
 		{ title: '服务名称', name: 'wan'+u+'_ppp_service', type: 'text', maxlen: 50, size: 64, value: nvram['wan'+u+'_ppp_service'] },
 		{ title: 'L2TP 服务', name: 'wan'+u+'_l2tp_server_ip', type: 'text', maxlen: 128, size: 64, value: nvram['wan'+u+'_l2tp_server_ip'] },
-		{ title: '使用 DHCP', name: 'f_wan'+u+'_pptp_dhcp', type: 'checkbox', value: (nvram['wan'+u+'_pptp_dhcp'] == 1) },
 		{ title: 'IP 地址', name: 'wan'+u+'_ipaddr', type: 'text', maxlen: 15, size: 17, value: nvram['wan'+u+'_ipaddr'] },
 		{ title: '子网掩码', name: 'wan'+u+'_netmask', type: 'text', maxlen: 15, size: 17, value: nvram['wan'+u+'_netmask'] },
 		{ title: '网关', name: 'wan'+u+'_gateway', type: 'text', maxlen: 15, size: 17, value: nvram['wan'+u+'_gateway'] },
@@ -1887,7 +1886,7 @@ value: nvram['wan'+u+'_pppoe_lef'] },
 { title: 'MTU', multi: [
 { name: 'wan'+u+'_mtu_enable', type: 'select', options: [['0', '默认'],['1','手动']], value: nvram['wan'+u+'_mtu_enable'] },
 { name: 'f_wan'+u+'_mtu', type: 'text', maxlen: 4, size: 6, value: nvram['wan'+u+'_mtu'] } ] },
-		{ title: '单线 MLPPP', name: 'f_wan'+u+'_ppp_mlppp', type: 'checkbox', value: (nvram['wan'+u+'_ppp_mlppp'] == 1) },
+		{ title: '使用 DHCP', name: 'f_wan'+u+'_pptp_dhcp', type: 'checkbox', value: (nvram['wan'+u+'_pptp_dhcp'] == 1) },
 
 		{ title: '上级路由器 IP 地址', name: 'wan'+u+'_modem_ipaddr', type: 'text', maxlen: 15, size: 17, suffix: ' <i>(必须与此路由器处于不同子网, 0.0.0.0 表示禁用)</i>', value: nvram['wan'+u+'_modem_ipaddr'] },
 { title: '看门狗模式', name: 'wan'+u+'_ckmtd', type: 'select', options: [['1','Ping'],['2','Traceroute*']], value: nvram['wan'+u+'_ckmtd'], suffix: ' <i>(默认：Traceroute; 仅当 Traceroute 不正常工作时，才使用 Ping</i>' },

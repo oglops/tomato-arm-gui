@@ -45,7 +45,7 @@ text-align: left;
 
 <script type='text/javascript'>
 
-//	<% nvram("usb_enable,usb_uhci,usb_ohci,usb_usb2,usb_mmc,usb_storage,usb_printer,usb_printer_bidirect,usb_automount,usb_fs_ext3,usb_fs_fat,usb_fs_ntfs,usb_fs_hfs,script_usbmount,script_usbumount,script_usbhotplug,idle_enable,usb_3g,usb_apcupsd"); %>
+//	<% nvram("usb_enable,usb_uhci,usb_ohci,usb_usb2,usb_usb3,usb_mmc,usb_storage,usb_printer,usb_printer_bidirect,usb_automount,usb_fs_ext4,usb_fs_fat,usb_fs_exfat,usb_fs_ntfs,usb_ntfs_driver,usb_fs_hfs,script_usbmount,script_usbumount,script_usbhotplug,idle_enable,usb_3g,usb_apcupsd"); %>
 //	<% usbdevices(); %>
 list = [];
 var xob = null;
@@ -227,6 +227,7 @@ var a = !E('_f_storage').checked;
 E('_f_uhci').disabled = b || nvram.usb_uhci == -1;
 E('_f_ohci').disabled = b || nvram.usb_ohci == -1;
 E('_f_usb2').disabled = b;
+	E('_f_usb3').disabled = b || nvram.usb_usb3 == -1;
 E('_f_print').disabled = b;
 E('_f_storage').disabled = b;
 
@@ -237,8 +238,9 @@ elem.display(PR('_f_mmc'), nvram.usb_mmc != -1);
 /* MICROSD-END */
 /* LINUX26-END */
 
-E('_f_ext3').disabled = b || a;
+	E('_f_ext4').disabled = b || a;
 E('_f_fat').disabled = b || a;
+	E('_f_exfat').disabled = b || a;
 /* LINUX26-BEGIN */
 E('_f_idle_enable').disabled = b || a;
 E('_f_usb_3g').disabled = b;
@@ -248,6 +250,7 @@ E('_f_usb_3g').disabled = b;
 /* UPS-END */
 /* NTFS-BEGIN */
 E('_f_ntfs').disabled = b || a;
+	E('_usb_ntfs_driver').disabled = b || a;
 /* NTFS-END */
 /* HFS-BEGIN */
 E('_f_hfs').disabled = b || a; //!Victek
@@ -271,6 +274,7 @@ fom.usb_enable.value = E('_f_usb').checked ? 1 : 0;
 fom.usb_uhci.value = nvram.usb_uhci == -1 ? -1 : (E('_f_uhci').checked ? 1 : 0);
 fom.usb_ohci.value = nvram.usb_ohci == -1 ? -1 : (E('_f_ohci').checked ? 1 : 0);
 fom.usb_usb2.value = E('_f_usb2').checked ? 1 : 0;
+	fom.usb_usb3.value = E('_f_usb3').checked ? 1 : 0;
 fom.usb_storage.value = E('_f_storage').checked ? 1 : 0;
 fom.usb_printer.value = E('_f_print').checked ? 1 : 0;
 fom.usb_printer_bidirect.value = E('_f_bprint').checked ? 1 : 0;
@@ -281,8 +285,9 @@ fom.usb_mmc.value = nvram.usb_mmc == -1 ? -1 : (E('_f_mmc').checked ? 1 : 0);
 /* MICROSD-END */
 /* LINUX26-END */
 
-fom.usb_fs_ext3.value = E('_f_ext3').checked ? 1 : 0;
+	fom.usb_fs_ext4.value = E('_f_ext4').checked ? 1 : 0;
 fom.usb_fs_fat.value = E('_f_fat').checked ? 1 : 0;
+	fom.usb_fs_exfat.value = E('_f_exfat').checked ? 1 : 0;
 /* NTFS-BEGIN */
 fom.usb_fs_ntfs.value = E('_f_ntfs').checked ? 1 : 0;
 /* NTFS-END */
@@ -325,18 +330,20 @@ reloadPage();
 <input type='hidden' name='usb_uhci'>
 <input type='hidden' name='usb_ohci'>
 <input type='hidden' name='usb_usb2'>
+<input type='hidden' name='usb_usb3'>
 <input type='hidden' name='usb_mmc'>
 <input type='hidden' name='usb_storage'>
 <input type='hidden' name='usb_printer'>
 <input type='hidden' name='usb_printer_bidirect'>
-<input type='hidden' name='usb_fs_ext3'>
+<input type='hidden' name='usb_fs_ext4'>
 <input type='hidden' name='usb_fs_fat'>
-<!-- NTFS-BEGIN
+<input type='hidden' name='usb_fs_exfat'>
+/* NTFS-BEGIN */
 <input type='hidden' name='usb_fs_ntfs'>
-NTFS-END -->
-<!-- HFS-BEGIN
+/* NTFS-END */
+/* HFS-BEGIN */
 <input type='hidden' name='usb_fs_hfs'>
-HFS-END -->
+/* HFS-END */
 <input type='hidden' name='usb_automount'>
 /* LINUX26-BEGIN */
 <input type='hidden' name='idle_enable'>
@@ -351,7 +358,7 @@ HFS-END -->
 <script type='text/javascript'>
 createFieldTable('', [
 	{ title: '启用 USB 功能', name: 'f_usb', type: 'checkbox', value: nvram.usb_enable == 1 },
-	{ title: 'USB 2.0 支持', indent: 2, name: 'f_usb2', type: 'checkbox', value: nvram.usb_usb2 == 1 },
+	{ title: 'USB 3.0 支持', indent: 2, name: 'f_usb3', type: 'checkbox', value: nvram.usb_usb3 == 1 },
 	{ title: 'USB 1.1 支持', indent: 2, multi: [
 { suffix: '&nbsp; OHCI &nbsp;&nbsp;&nbsp;', name: 'f_ohci', type: 'checkbox', value: nvram.usb_ohci == 1 },
 { suffix: '&nbsp; UHCI &nbsp;',	name: 'f_uhci', type: 'checkbox', value: nvram.usb_uhci == 1 }
@@ -362,15 +369,27 @@ null,
 null,
 	{ title: 'USB 存储支持', name: 'f_storage', type: 'checkbox', value: nvram.usb_storage == 1 },
 		{ title: '文件系统支持', indent: 2, multi: [
-{ suffix: '&nbsp; Ext2 / Ext3 &nbsp;&nbsp;&nbsp;', name: 'f_ext3', type: 'checkbox', value: nvram.usb_fs_ext3 == 1 },
+			{ suffix: '&nbsp; Ext2 / Ext3 / Ext4 &nbsp;&nbsp;&nbsp;', name: 'f_ext4', type: 'checkbox', value: nvram.usb_fs_ext4 == 1 },
 /* NTFS-BEGIN */
 { suffix: '&nbsp; NTFS &nbsp;&nbsp;&nbsp;', name: 'f_ntfs', type: 'checkbox', value: nvram.usb_fs_ntfs == 1 },
 /* NTFS-END */
-{ suffix: '&nbsp; FAT &nbsp;', name: 'f_fat', type: 'checkbox', value: nvram.usb_fs_fat == 1 }
+			{ suffix: '&nbsp; FAT &nbsp;', name: 'f_fat', type: 'checkbox', value: nvram.usb_fs_fat == 1 },
+			{ suffix: '&nbsp; exFAT &nbsp;', name: 'f_exfat', type: 'checkbox', value: nvram.usb_fs_exfat == 1 }
 /* HFS-BEGIN */
 ,{ suffix: '&nbsp; HFS / HFS+ &nbsp;', name: 'f_hfs', type: 'checkbox', value: nvram.usb_fs_hfs == 1 }
 /* HFS-END */
 ] },
+/* NTFS-BEGIN */
+	{ title: 'NTFS Driver', indent: 2, name: 'usb_ntfs_driver', type: 'select', options: [
+			['ntfs3g','Open NTFS-3G driver'],
+/* TUXERA-BEGIN */
+			['tuxera','Tuxera driver'],
+/* TUXERA-END */
+/* PARAGON-BEGIN */
+			['paragon','Paragon driver'],
+/* PARAGON-END */
+		], value: nvram.usb_ntfs_driver },
+/* NTFS-END */
 /* LINUX26-BEGIN */
 /* MICROSD-BEGIN */
 		{ title: 'SD/MMC 卡支持', indent: 2, name: 'f_mmc', type: 'checkbox', value: nvram.usb_mmc == 1 },

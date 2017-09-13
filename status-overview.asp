@@ -39,6 +39,10 @@ wmo = {'ap':'Access Point','sta':'Wireless Client','wet':'Wireless Ethernet Brid
 auth = {'disabled':'-','wep':'WEP','wpa_personal':'WPA Personal (PSK)','wpa_enterprise':'WPA Enterprise','wpa2_personal':'WPA2 Personal (PSK)','wpa2_enterprise':'WPA2 Enterprise','wpaX_personal':'WPA / WPA2 Personal','wpaX_enterprise':'WPA / WPA2 Enterprise','radius':'Radius'};
 enc = {'tkip':'TKIP','aes':'AES','tkip+aes':'TKIP / AES'};
 bgmo = {'disabled':'-','mixed':'Auto','b-only':'B Only','g-only':'G Only','bg-mixed':'B/G Mixed','lrs':'LRS','n-only':'N Only'};
+
+lastjiffiestotal = 0;
+lastjiffiesidle = 0;
+lastjiffiesusage = 100;
 </script>
 <script type='text/javascript' src='wireless.jsx?_http_id=<% nv(http_id); %>'></script>
 <script type='text/javascript' src='status-data.jsx?_http_id=<% nv(http_id); %>'></script>
@@ -223,6 +227,8 @@ E("nversion").innerHTML = code;
 function show()
 {
 c('cpu', stats.cpuload);
+	c('cpupercent', stats.cpupercent);
+	c('wlsense', stats.wlsense);
 c('uptime', stats.uptime);
 c('time', stats.time);
 c('memory', stats.memory);
@@ -351,15 +357,19 @@ createFieldTable('', [
 	{ title: '设备名称', text: nvram.router_name },
 	{ title: '设备型号', text: nvram.t_model_name },
 	{ title: '芯片组', text: stats.systemtype },
-	{ title: 'CPU 频率', text: stats.cpumhz },
+	{ title: 'CPU 频率', text: stats.cpumhz, suffix: ' <small>(双核)</small>' },
 	{ title: 'Flash 容量', text: stats.flashsize },
 null,
 	{ title: '时间', rid: 'time', text: stats.time },
 	{ title: '开机时间', rid: 'uptime', text: stats.uptime },
-	{ title: 'CPU 负载 <small>(1 / 5 / 15 mins)</small>', rid: 'cpu', text: stats.cpuload },
+	{ title: 'CPU 负载', rid: 'cpupercent', text: stats.cpupercent },
 	{ title: '全部/剩余内存', rid: 'memory', text: stats.memory },
 	{ title: '全部/剩余 Swap', rid: 'swap', text: stats.swap, hidden: (stats.swap == '') },
 	{ title: '全部/剩余 NVRAM', text: scaleSize(nvstat.size) + ' / ' + scaleSize(nvstat.free) + ' <small>(' + (a).toFixed(2) + '%)</small>' }
+	{ title: '全部/剩余内存', text: scaleSize(nvstat.size) + ' / ' + scaleSize(nvstat.free) + ' <small>(' + (a).toFixed(2) + '%)</small>' },
+	null,
+	{ title: 'CPU 温度', rid: 'temps', text: stats.cputemp + 'C'},
+	{ title: '无线 温度', rid: 'wlsense', text: stats.wlsense }
 ]);
 </script>
 </div>
